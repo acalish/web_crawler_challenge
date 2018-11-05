@@ -1,10 +1,47 @@
-// Thought process:
-// In order to be a valid link, the address must exist
-// first, get an array of all of the valid addresses
-// then, go through the links and sort them if they are valid or not
-// if valid, push into the visited array
-// go back and remove duplicates
+// Step 1. initialize empty arrays
+let visit = []
+let skip = []
+let invalid = []
 
+// Step 2. + 3. generate array of all addresses and array of all links
+let pageAddresses = []
+let pageLinks = []
+const getUrls = function(array) {
+  // first time, get addresses
+  pageAddresses.push(array.address)
+  // then get links
+  pageLinks.push(array.links)
+}
+let links = internetOne.pages.forEach(getUrls)
+console.log('address', pageAddresses)
+console.log('links', pageLinks)
+
+const webCrawl = function(links, pageAddresses, pageLinks) {
+  // Step 4. loop through links array, push into visit or invalid
+  for (let i=0; i<pageLinks.length; i++) {
+    if (pageAddresses.includes(pageLinks[i])) {
+      visit.push(pageLinks[i])
+    } else {
+      invalid.push(pageLinks[i])
+    }
+  }
+
+  // Step 5. go through visit arr and move any duplicates into skip
+  for (let i=0; i<visit.length; i++) {
+    // use indexOf to remove duplicates
+    if (indexOf(visit[i]) !=== -1) {
+      skip.push(visit[i])
+    }
+  }
+
+  // // Step 6. return arrays
+  return visit
+  return skip
+  return invalid
+}
+
+
+// test internet data
 let internetOne = {
   "pages": [
     {
@@ -30,33 +67,6 @@ let internetOne = {
   ]
 }
 
-let list = []
-const mapPages = function(array) {
-  // first time, get addresses
-  list.push(array.address)
-  // then get links
-  list.push(array.links)
-}
-let links = internetOne.pages.forEach(mapPages)
-// create an array of all the URLs
-// console.log(internetOne.pages[0].address)
-console.log(list)
-
-// create three arrays - success, duplicate, invalid
-let success = []
-let duplicate = []
-let invalid = []
-
-
-// ### Expected output:
-//
-// ```
-// Success: ["http://foo.bar.com/p1", "http://foo.bar.com/p2", "http://foo.bar.com/p4", "http://foo.bar.com/p5", "http://foo.bar.com/p6"]
-//
-// Skipped: ["http://foo.bar.com/p2", "http://foo.bar.com/p4","http://foo.bar.com/p1", "http://foo.bar.com/p5"]
-//
-// Error: ["http://foo.bar.com/p3", "http://foo.bar.com/p7"]
-// ```
 let internetTwo = {
   "pages": [
       {
